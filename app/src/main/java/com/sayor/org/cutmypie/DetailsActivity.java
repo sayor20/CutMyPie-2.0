@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class DetailsActivity extends ActionBarActivity {
 
     TextView tvDesc;
     ImageView ivPhoto;
+    FoodData foodData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class DetailsActivity extends ActionBarActivity {
 
         Intent i = getIntent();
         String fooddesc =i.getStringExtra("marker");
-        FoodData foodData = new Select().from(FoodData.class).where("fooddesc=?", fooddesc).executeSingle();
+        foodData = new Select().from(FoodData.class).where("fooddesc=?", fooddesc).executeSingle();
         tvDesc.setText(foodData.getFooddesc());
         byte[] imgFile = foodData.getImage();
         Bitmap bm = null;
@@ -34,13 +36,18 @@ public class DetailsActivity extends ActionBarActivity {
         bm = BitmapFactory.decodeByteArray(imgFile, 0 , imgFile.length);
 
         ivPhoto.setImageBitmap(bm);
-
-
     }
 
     private void loadView() {
         tvDesc = (TextView)findViewById(R.id.tvDesc);
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
+    }
+
+    public void onContact(View v) {
+        Intent i =new Intent(this, ChatActivity.class);
+        i.putExtra("receiverId", foodData.getOwnerid());
+        i.putExtra("receiverName", foodData.getOwnername() );
+        startActivity(i);
     }
 
     @Override

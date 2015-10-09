@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -128,6 +129,8 @@ public class PostActivity extends ActionBarActivity {
         parseObject.put("lat", location.getLatitude());
         parseObject.put("lon", location.getLongitude());
         parseObject.put("photo", photoFile);
+        parseObject.put("ownerid", ParseUser.getCurrentUser().getObjectId());
+        parseObject.put("ownername", ParseUser.getCurrentUser().getUsername());
         parseObject.saveEventually();
     }
 

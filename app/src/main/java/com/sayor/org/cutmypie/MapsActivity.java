@@ -66,6 +66,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startActivity(i);
             return true;
         }
+
+        if (id == R.id.action_conversation) {
+            Intent i = new Intent(this, ConversationActivity.class);
+            startActivity(i);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -86,7 +93,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             googleMap.addMarker(new MarkerOptions()
                                     .position(new LatLng(parseObject.getDouble("lat"), parseObject.getDouble("lon")))
-                                    .title(parseObject.getString("fooddesc")));
+                                    .title(parseObject.getString("fooddesc"))
+                                    .snippet(parseObject.getString("ownername")));
                             googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                 @Override
                                 public void onInfoWindowClick(Marker marker) {
@@ -104,7 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             FoodData foodData = new Select().from(FoodData.class).where("fooddesc=?",parseObject.getString("fooddesc")).executeSingle();
 
                             if(foodData==null) {
-                                foodData = new FoodData(parseObject.getString("fooddesc"), parseObject.getString("foodcap"), parseObject.getString("timeexp"), parseObject.getDouble("lat"), parseObject.getDouble("lon"), bytes);
+                                foodData = new FoodData(parseObject.getString("fooddesc"), parseObject.getString("foodcap"), parseObject.getString("timeexp"), parseObject.getDouble("lat"), parseObject.getDouble("lon"), bytes, parseObject.getString("ownerid"), parseObject.getString("ownername"));
                                 foodData.save();
                             }
                         }
@@ -123,5 +131,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
         }
     }
-
 }

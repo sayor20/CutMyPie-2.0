@@ -24,11 +24,6 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
@@ -37,7 +32,7 @@
         <!-- Active Android meta-data -->
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="two.db" />
+            android:value="three.db" />
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1" />
@@ -64,6 +59,23 @@
         <activity
             android:name=".ChatActivity"
             android:label="@string/title_activity_chat"
+            android:parentActivityName=".MapsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sayor.org.cutmypie.MapsActivity" />
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ConversationActivity"
+            android:label="@string/title_activity_conversation"
             android:parentActivityName=".MapsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

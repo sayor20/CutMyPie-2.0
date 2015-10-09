@@ -4,10 +4,10 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-@Table(name="FoodData")
-public class FoodData extends Model{
+@Table(name = "FoodData")
+public class FoodData extends Model {
 
-    @Column(name="fooddesc")
+    @Column(name = "fooddesc")
     String fooddesc;
 
     @Column(name = "feedcap")
@@ -24,6 +24,12 @@ public class FoodData extends Model{
 
     @Column(name = "photo")
     byte[] image;
+
+    @Column(name = "ownerid")
+    String ownerid;
+
+    @Column(name = "ownername")
+    String ownername;
 
     public byte[] getImage() {
         return image;
@@ -49,16 +55,26 @@ public class FoodData extends Model{
         return lon;
     }
 
-    public FoodData(String fooddesc, String feedcap,String timeexp,Double lat,Double lon, byte[] imgfile){
+    public String getOwnername() {
+        return ownername;
+    }
+
+    public String getOwnerid() {
+        return ownerid;
+    }
+
+    public FoodData(String fooddesc, String feedcap, String timeexp, Double lat, Double lon, byte[] imgfile, String ownerid, String ownername) {
         this.fooddesc = fooddesc;
         this.feedcap = feedcap;
         this.timeexp = timeexp;
         this.lat = lat;
         this.lon = lon;
         this.image = imgfile;
+        this.ownerid = ownerid;
+        this.ownername = ownername;
     }
 
-    public FoodData(){
+    public FoodData() {
         super();
     }
 }

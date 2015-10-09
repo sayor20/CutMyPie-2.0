@@ -1,6 +1,7 @@
 package com.sayor.org.cutmypie;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class ParseApplication extends com.activeandroid.app.Application{
     @Override
@@ -9,6 +10,7 @@ public class ParseApplication extends com.activeandroid.app.Application{
 
         // Register parse models
         // ParseObject.registerSubclass(FoodData.class);
+        ParseObject.registerSubclass(Message.class);
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
