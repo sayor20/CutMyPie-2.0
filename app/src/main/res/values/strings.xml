@@ -2,5 +2,11 @@
     <string name="app_name">CutMyPie</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="action_post">Post</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_post">PostActivity</string>
+    <string name="title_camera">camera</string>
+    <string name="title_location">current location</string>
+    <string name="title_activity_chat">ChatActivity</string>
     <string name="action_settings">Settings</string>
 </resources>

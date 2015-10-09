@@ -1,17 +1,14 @@
 package com.sayor.org.cutmypie;
 
-import android.app.Application;
-
 import com.parse.Parse;
-import com.parse.ParseObject;
 
-public class ParseApplication extends Application{
+public class ParseApplication extends com.activeandroid.app.Application{
     @Override
     public void onCreate() {
         super.onCreate();
 
         // Register parse models
-        ParseObject.registerSubclass(FoodData.class);
+        // ParseObject.registerSubclass(FoodData.class);
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);

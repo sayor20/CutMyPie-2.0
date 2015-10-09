@@ -1,5 +1,72 @@
 package com.sayor.org.cutmypie;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+@Table(name="FoodData")
+public class FoodData extends Model{
+
+    @Column(name="fooddesc")
+    String fooddesc;
+
+    @Column(name = "feedcap")
+    String feedcap;
+
+    @Column(name = "timeexp")
+    String timeexp;
+
+    @Column(name = "lat")
+    Double lat;
+
+    @Column(name = "lon")
+    Double lon;
+
+    @Column(name = "photo")
+    byte[] image;
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public String getFooddesc() {
+        return fooddesc;
+    }
+
+    public String getFeedcap() {
+        return feedcap;
+    }
+
+    public String getTimeexp() {
+        return timeexp;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public FoodData(String fooddesc, String feedcap,String timeexp,Double lat,Double lon, byte[] imgfile){
+        this.fooddesc = fooddesc;
+        this.feedcap = feedcap;
+        this.timeexp = timeexp;
+        this.lat = lat;
+        this.lon = lon;
+        this.image = imgfile;
+    }
+
+    public FoodData(){
+        super();
+    }
+}
+
+
+/*
+package com.sayor.org.cutmypie;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
@@ -9,8 +76,8 @@ public class FoodData extends ParseObject{
     String fooddesc;
     String feedcap;
     String timeexp;
-    double lat;
-    double lon;
+    Number lat;
+    Number lon;
 
     public FoodData(){
         super();
@@ -40,16 +107,14 @@ public class FoodData extends ParseObject{
         put("timeexp", timeexp);
     }
 
-    public double getLat() {
-        return getDouble(String.valueOf(lat));
+    public Number getLat() {return getNumber(String.valueOf(lat));
     }
 
     public void setLat(double lat) {
         put("lat", lat);
     }
 
-    public double getLon() {
-        return lon;
+    public Number getLon() {return getNumber(String.valueOf(lon));
     }
 
     public void setLon(double lon) {
@@ -60,3 +125,5 @@ public class FoodData extends ParseObject{
         return "fooddesc = " + fooddesc + ", feedcap = " + feedcap + ", timeexp = " + timeexp + ", lat = " + lat + ", lon = " + lon;
     }
 }
+
+*/
