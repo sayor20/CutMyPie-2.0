@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.adapters;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sayor.org.cutmypie.models.Message;
+import com.sayor.org.cutmypie.R;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigInteger;
@@ -26,8 +28,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).
-                    inflate(R.layout.chat_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.chat_item, parent, false);
             final ViewHolder holder = new ViewHolder();
             holder.imageLeft = (ImageView)convertView.findViewById(R.id.ivProfileLeft);
             holder.imageRight = (ImageView)convertView.findViewById(R.id.ivProfileRight);

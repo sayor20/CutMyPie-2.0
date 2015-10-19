@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.sayor.org.cutmypie.LoginActivity">
+    tools:context="com.sayor.org.cutmypie.activities.LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,6 +37,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/etPassword"
+        android:inputType="textPassword"
         android:layout_alignBottom="@+id/tvPassword"
         android:layout_alignEnd="@+id/etUsername" />
 

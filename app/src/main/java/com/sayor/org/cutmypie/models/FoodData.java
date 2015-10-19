@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.models;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;

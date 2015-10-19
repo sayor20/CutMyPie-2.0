@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.sayor.org.cutmypie.R;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -44,6 +45,8 @@ public class LoginActivity extends ActionBarActivity {
 
         tvEmail.setVisibility(View.INVISIBLE);
         etEmail.setVisibility(View.INVISIBLE);
+
+        onBackPressed();
     }
 
     public void onToggle(View v){
@@ -56,6 +59,11 @@ public class LoginActivity extends ActionBarActivity {
             etEmail.setVisibility(View.VISIBLE);
             btLogin.setText("Signup");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing.
     }
 
     public void onValidate(View v){

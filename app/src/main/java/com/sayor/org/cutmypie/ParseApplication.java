@@ -2,6 +2,7 @@ package com.sayor.org.cutmypie;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.sayor.org.cutmypie.models.Message;
 
 public class ParseApplication extends com.activeandroid.app.Application{
     @Override

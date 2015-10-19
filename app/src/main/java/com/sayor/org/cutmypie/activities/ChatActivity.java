@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,9 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.sayor.org.cutmypie.models.Message;
+import com.sayor.org.cutmypie.R;
+import com.sayor.org.cutmypie.adapters.ChatListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +30,12 @@ public class ChatActivity extends ActionBarActivity {
     private ListView lvChat;
     private EditText etMessage;
     private Button btSend;
-    private ArrayList<Message> mMessages;
+    private ArrayList<Message> mMessages, mBuffer;
     private boolean mFirstLoad;
     private String rid,rname,sUserId;
     private TextView tvChatTitle;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
-    //private Handler handler = new Handler();
+    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 25;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,8 @@ public class ChatActivity extends ActionBarActivity {
         mFirstLoad = true;
         sUserId = ParseUser.getCurrentUser().getObjectId();
         mMessages = new ArrayList<Message>();
-        aChatList = new ChatListAdapter(this,null,mMessages);
+        mBuffer = new ArrayList<Message>();
+        aChatList = new ChatListAdapter(this,sUserId,mMessages);
         lvChat.setTranscriptMode(1);
         lvChat.setAdapter(aChatList);
         setupMessagePosting();
@@ -63,6 +67,7 @@ public class ChatActivity extends ActionBarActivity {
 
     // Setup message field and posting
     private void setupMessagePosting() {
+        refreshMessages();
         btSend.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -93,18 +98,40 @@ public class ChatActivity extends ActionBarActivity {
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
         // Construct query to execute
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        ParseQuery<Message> query1 = ParseQuery.getQuery(Message.class);
         // Configure limit and sort order
-        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.whereEqualTo("userId", sUserId);
-        //query.whereEqualTo("receiverId", rid);
+        query1.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        query1.whereEqualTo("userId", sUserId);
+        //query.whereEqualTo("userId", rid);
+        query1.whereEqualTo("ReceiverId", rid);
+        query1.orderByAscending("ReceiverId");
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
-        query.findInBackground(new FindCallback<Message>() {
+        query1.findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) {
                 if (e == null) {
-                    mMessages.clear();
-                    mMessages.addAll(messages);
+                    mBuffer.addAll(messages);
+
+                } else {
+                    Log.d("message", "Error: " + e.getMessage());
+                }
+            }
+        });
+
+        ParseQuery<Message> query2 = ParseQuery.getQuery(Message.class);
+        // Configure limit and sort order
+        query2.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        query2.whereEqualTo("userId", rid);
+        //query.whereEqualTo("userId", rid);
+        query2.whereEqualTo("ReceiverId", sUserId);
+        query2.orderByAscending("createdAt");
+        // Execute query to fetch all messages from Parse asynchronously
+        // This is equivalent to a SELECT query with SQL
+        query2.findInBackground(new FindCallback<Message>() {
+            public void done(List<Message> messages, ParseException e) {
+                if (e == null) {
+                    mBuffer.addAll(messages);
+                    aChatList.addAll(mBuffer);
                     aChatList.notifyDataSetChanged(); // update adapter
                     // Scroll to the bottom of the list on initial load
                     if (mFirstLoad) {

@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,9 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.sayor.org.cutmypie.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -62,6 +65,12 @@ public class PostActivity extends ActionBarActivity {
         Criteria criteria = new Criteria();
         String bestProvider = locationManager.getBestProvider(criteria, false);
         location = locationManager.getLastKnownLocation(bestProvider);
+        if(location !=null){
+            MenuItem m= (MenuItem)findViewById(R.id.action_post);
+            m.setIcon(R.drawable.ic_got_location);
+        }else{
+            Toast.makeText(this, "error in getting data", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void getPhoto(){
@@ -122,6 +131,11 @@ public class PostActivity extends ActionBarActivity {
         photoFile = new ParseFile(buffer.toByteArray());
         photoFile.saveInBackground();
 
+        if(etFoodDesc.getText()==null || etFeedCap.getText()==null ||etExp.getText()==null ||location==null || photoFile==null){
+            Toast.makeText(this, "Please provide all the information", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         ParseObject parseObject = new ParseObject("FoodData");
         parseObject.put("fooddesc",etFoodDesc.getText().toString() );
         parseObject.put("feedcap", etFeedCap.getText().toString());
@@ -131,7 +145,13 @@ public class PostActivity extends ActionBarActivity {
         parseObject.put("photo", photoFile);
         parseObject.put("ownerid", ParseUser.getCurrentUser().getObjectId());
         parseObject.put("ownername", ParseUser.getCurrentUser().getUsername());
-        parseObject.saveEventually();
+        parseObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e==null)
+                    Toast.makeText(PostActivity.this, "Posted Sucessfully",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.sayor.org.cutmypie.models.FoodData;
+import com.sayor.org.cutmypie.R;
 
 
 public class DetailsActivity extends ActionBarActivity {
 
-    TextView tvDesc;
+    TextView tvDesc, tvCap, tvExpr;
     ImageView ivPhoto;
     FoodData foodData;
 
@@ -30,6 +32,8 @@ public class DetailsActivity extends ActionBarActivity {
         String fooddesc =i.getStringExtra("marker");
         foodData = new Select().from(FoodData.class).where("fooddesc=?", fooddesc).executeSingle();
         tvDesc.setText(foodData.getFooddesc());
+        tvCap.setText(foodData.getFeedcap());
+        tvExpr.setText(foodData.getTimeexp());
         byte[] imgFile = foodData.getImage();
         Bitmap bm = null;
 
@@ -40,6 +44,8 @@ public class DetailsActivity extends ActionBarActivity {
 
     private void loadView() {
         tvDesc = (TextView)findViewById(R.id.tvDesc);
+        tvCap = (TextView)findViewById(R.id.tvCap);
+        tvExpr = (TextView)findViewById(R.id.tvExpr);
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
     }
 

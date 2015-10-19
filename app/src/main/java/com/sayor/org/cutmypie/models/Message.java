@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -12,7 +12,7 @@ public class Message extends ParseObject {
     }
 
     public String getReceiverId() {
-        return getString("receiverId");
+        return getString("ReceiverId");
     }
 
     public String getUserName() {

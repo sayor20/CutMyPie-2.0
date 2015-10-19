@@ -1,4 +1,4 @@
-package com.sayor.org.cutmypie;
+package com.sayor.org.cutmypie.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,9 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.sayor.org.cutmypie.models.FoodData;
+import com.sayor.org.cutmypie.R;
 
 import java.util.List;
 
@@ -43,6 +46,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         ParseAnalytics.trackAppOpened(getIntent());
 
+        setProgressBarIndeterminateVisibility(true);
+        setProgressBarIndeterminate(true);
+
+        onBackPressed();
+
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.fragment);
         mapFragment.getMapAsync(this);
     }
@@ -52,6 +60,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // do nothing.
     }
 
     @Override
@@ -69,6 +82,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (id == R.id.action_conversation) {
             Intent i = new Intent(this, ConversationActivity.class);
+            startActivity(i);
+            return true;
+        }
+
+        if (id == R.id.action_logout) {
+            Intent i = new Intent(this, LoginActivity.class);
+            ParseUser.logOut();
             startActivity(i);
             return true;
         }
@@ -130,5 +150,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .title(foodData.getFooddesc()));
                 }
         }
+        setProgressBarIndeterminate(false);
     }
 }
